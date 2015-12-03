@@ -48,11 +48,13 @@ class Placeholder implements ViewHelperInterface
                 if (!$this->has($args[0])) {
                     throw new \InvalidArgumentException('Placeholder "'.$args[0].'" not found');
                 }
+
                 return $this->container[$args[0]];
             case 2:
                 if (!$this->has($args[0])) {
                     return $args[1];
                 }
+
                 return $this->container[$args[0]];
         }
     }

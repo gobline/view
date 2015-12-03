@@ -46,6 +46,7 @@ class ViewHelperCallable
     private function getHelper()
     {
         $getHelperClosure = $this->getHelperClosure;
+
         return $getHelperClosure();
     }
 }

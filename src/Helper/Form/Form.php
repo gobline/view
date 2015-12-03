@@ -153,6 +153,7 @@ class Form implements ViewHelperInterface
     public function hasElement($name)
     {
         $container = $this->getContainer();
+
         return $container->hasComponent($name);
     }
 
@@ -310,7 +311,7 @@ class Form implements ViewHelperInterface
     {
         $str = preg_replace('/[^a-z0-9]+/i', ' ', $str);
         $str = trim($str);
-        $str = str_replace(" ", "-", $str);
+        $str = str_replace(' ', '-', $str);
 
         return $str;
     }

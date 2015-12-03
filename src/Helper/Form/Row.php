@@ -45,8 +45,7 @@ class Row
             if ($rowErrorClass && $this->form->hasErrors($this->name)) {
                 if (array_key_exists('class', $rowAttributes)) {
                     $rowAttributes['class'] .= ' '.$rowErrorClass;
-                }
-                else {
+                } else {
                     $rowAttributes['class'] = $rowErrorClass;
                 }
             }
@@ -88,7 +87,7 @@ class Row
         try {
             $str = $this->render();
         } catch (\Exception $exception) {
-            $previousHandler = set_exception_handler(function (){});
+            $previousHandler = set_exception_handler(function () {});
             restore_error_handler();
             call_user_func($previousHandler, $exception);
             die;

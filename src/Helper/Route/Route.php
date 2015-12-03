@@ -32,7 +32,7 @@ class Route implements ViewHelperInterface
     private $activeClass = 'active';
 
     public function __construct(
-        Environment $environment, 
+        Environment $environment,
         UriBuilder $uriBuilder,
         MiddlewareDispatcher $dispatcher
     ) {

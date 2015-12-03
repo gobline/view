@@ -29,7 +29,7 @@ class HtmlTemplateRenderer implements ViewRendererInterface
 
     public function partial($template, array $data = [])
     {
-        $render = function() use ($template, $data) {
+        $render = function () use ($template, $data) {
             extract($this->getViewHelpers());
             extract($data);
             include $template;
@@ -47,7 +47,7 @@ class HtmlTemplateRenderer implements ViewRendererInterface
 
     public function render($template, $model)
     {
-        $render = function() use ($model, $template) {
+        $render = function () use ($model, $template) {
             extract($this->getViewHelpers());
             include $template;
         };

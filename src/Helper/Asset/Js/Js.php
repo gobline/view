@@ -17,7 +17,6 @@ use Gobline\View\Helper\Asset\MinifierInterface;
 use Gobline\Mediator\EventDispatcherInterface;
 use Gobline\Environment\Environment;
 
-
 /**
  * @author Mathieu Decaffmeyer <mdecaffmeyer@gmail.com>
  */

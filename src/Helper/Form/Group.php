@@ -50,8 +50,7 @@ class Group
             if ($rowErrorClass && $this->form->hasErrors($this->name)) {
                 if (array_key_exists('class', $rowAttributes)) {
                     $rowAttributes['class'] .= ' '.$rowErrorClass;
-                }
-                else {
+                } else {
                     $rowAttributes['class'] = $rowErrorClass;
                 }
             }
@@ -64,7 +63,6 @@ class Group
         }
 
         foreach ($element->getSwitches() as $switch) {
-
             if ($this->groupWrapperTagName) {
                 $str .= '<'.$this->groupWrapperTagName;
 
@@ -90,7 +88,6 @@ class Group
             if ($this->groupWrapperTagName) {
                 $str .= '</'.$this->groupWrapperTagName.">\n";
             }
-
         }
 
         if ($printAllErrors) {

@@ -102,7 +102,7 @@ class Data
         $pairs = [];
         $nb = count($array);
         for ($i = 0; $i < $nb - 1; $i += 2) {
-            $pairs[$array[$i]] = $array[$i+1];
+            $pairs[$array[$i]] = $array[$i + 1];
         }
         if ($i < $nb) {
             $pairs[$array[$i]] = '';

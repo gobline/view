@@ -12,7 +12,6 @@
 namespace Gobline\View\Helper\Flash;
 
 use Gobline\View\Helper\ViewHelperInterface;
-use Gobline\Http\Request\HttpRequestInterface;
 use Gobline\Flash\FlashInterface;
 
 /**

@@ -46,15 +46,16 @@ class Title extends AbstractViewEventSubscriber implements ViewHelperInterface
     {
         if (!$suffix) {
             $this->suffix = '';
+
             return;
         }
 
-        $this->suffix = $suffix . $this->suffix;
+        $this->suffix = $suffix.$this->suffix;
     }
 
     public function onHeadTitle()
     {
-        echo $this->title . $this->suffix;
+        echo $this->title.$this->suffix;
     }
 
     public function getSubscribedEvents()

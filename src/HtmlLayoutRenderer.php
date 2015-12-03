@@ -47,7 +47,7 @@ class HtmlLayoutRenderer implements ViewRendererInterface
         if ($this->layouts) {
             $layout = array_shift($this->layouts);
 
-            $render = function() use ($layout) {
+            $render = function () use ($layout) {
                 extract($this->getViewHelpers());
                 include $layout;
             };

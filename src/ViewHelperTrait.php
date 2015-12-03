@@ -12,7 +12,6 @@
 namespace Gobline\View;
 
 use Gobline\View\Helper\ViewHelperContainer;
-use Gobline\View\Helper\ViewHelperInterface;
 
 /**
  * @author Mathieu Decaffmeyer <mdecaffmeyer@gmail.com>

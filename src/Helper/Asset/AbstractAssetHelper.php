@@ -95,9 +95,8 @@ abstract class AbstractAssetHelper extends AbstractViewEventSubscriber
         }
 
         if (!$this->asset->isExternal()) {
-
             if (
-                strpos($this->asset->getPath(), '{') || 
+                strpos($this->asset->getPath(), '{') ||
                 strpos($this->asset->getPath(), ';')
             ) {
                 $this->printInternalContent($this->asset->getPath());
@@ -105,7 +104,7 @@ abstract class AbstractAssetHelper extends AbstractViewEventSubscriber
                 if (!$this->minify) {
                     $path = $this->basePath.'/'.$this->asset->getPath();
                     if ($this->noCache) {
-                        $path .= '?v='.substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 10);
+                        $path .= '?v='.substr(str_shuffle('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'), 0, 10);
                     }
                     $this->printReference($path);
                 } else {
