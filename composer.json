@@ -19,7 +19,16 @@
         }
     },
     "require": {
-        "php": ">=5.6.0"
+        "php": ">=5.6.0",
+        "gobline/container": "~1.0",
+        "gobline/mediator": "~3.0",
+        "gobline/environment": "~1.0",
+        "gobline/router": "~2.0",
+        "gobline/auth": "~2.0",
+        "gobline/form": "~1.0",
+        "gobline/translator": "~2.0",
+        "gobline/flash": "~2.0",
+        "zendframework/zend-escaper": "^2.5"
     },
     "extra": {
         "branch-alias": {
