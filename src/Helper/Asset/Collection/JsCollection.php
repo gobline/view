@@ -11,11 +11,10 @@
 
 namespace Gobline\View\Helper\Asset\Collection;
 
-use Gobline\View\Helper\Asset\AssetVersions;
 use Gobline\View\Helper\Asset\MinifierInterface;
-use Gobline\View\Helper\Asset\ModuleAssetCopier;
 use Gobline\View\Helper\Asset\Js\Script;
 use Gobline\Mediator\EventDispatcherInterface;
+use Gobline\Environment\Environment;
 
 /**
  * @author Mathieu Decaffmeyer <mdecaffmeyer@gmail.com>
@@ -25,12 +24,10 @@ class JsCollection extends AbstractCollection
     public function __construct(
         Collection $collection,
         EventDispatcherInterface $eventDispatcher,
-        AssetVersions $assetVersions,
-        MinifierInterface $minifier,
-        ModuleAssetCopier $moduleAssetCopier,
-        $baseUrl
+        Environment $environment,
+        MinifierInterface $minifier
     ) {
-        parent::__construct($collection, $assetVersions, $minifier, $moduleAssetCopier, $baseUrl);
+        parent::__construct($collection, $environment, $minifier);
         $eventDispatcher->addSubscriber($this);
     }
 
@@ -41,11 +38,7 @@ class JsCollection extends AbstractCollection
 
     public function add($path, $isModuleAsset = false)
     {
-        $this->collection->add(
-            new Script(
-                $path,
-                $this->collection->getLocation(),
-                $isModuleAsset));
+        $this->collection->add(new Script($path, $this->collection->getLocation()));
 
         return $this;
     }

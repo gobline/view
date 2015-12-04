@@ -12,10 +12,9 @@
 namespace Gobline\View\Helper\Asset\Collection;
 
 use Gobline\View\Helper\ViewHelperInterface;
-use Gobline\View\Helper\Asset\AssetVersions;
 use Gobline\View\Helper\Asset\MinifierInterface;
-use Gobline\View\Helper\Asset\ModuleAssetCopier;
 use Gobline\Mediator\EventDispatcherInterface;
+use Gobline\Environment\Environment;
 
 /**
  * @author Mathieu Decaffmeyer <mdecaffmeyer@gmail.com>
@@ -24,23 +23,17 @@ class CssCollectionFactory implements ViewHelperInterface
 {
     private $collections = [];
     private $eventDispatcher;
-    private $assetVersions;
     private $minifier;
-    private $moduleAssetCopier;
-    private $baseUrl;
+    private $environment;
 
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
-        AssetVersions $assetVersions,
-        MinifierInterface $minifier,
-        ModuleAssetCopier $moduleAssetCopier,
-        $baseUrl
+        Environment $environment,
+        MinifierInterface $minifier
     ) {
         $this->eventDispatcher = $eventDispatcher;
-        $this->assetVersions = $assetVersions;
         $this->minifier = $minifier;
-        $this->moduleAssetCopier = $moduleAssetCopier;
-        $this->baseUrl = $baseUrl;
+        $this->environment = $environment;
     }
 
     public static function getName()
@@ -48,16 +41,14 @@ class CssCollectionFactory implements ViewHelperInterface
         return 'cssCollection';
     }
 
-    public function cssCollection($path, $ieConditionalComment = null)
+    public function __invoke($path, $ieConditionalComment = null)
     {
         if (!isset($this->collections[$path])) {
             $this->collections[$path] = new CssCollection(
                 new Collection($path, 'head', $ieConditionalComment),
                 $this->eventDispatcher,
-                $this->assetVersions,
-                $this->minifier,
-                $this->moduleAssetCopier,
-                $this->baseUrl);
+                $this->environment,
+                $this->minifier);
         }
 
         return $this->collections[$path];

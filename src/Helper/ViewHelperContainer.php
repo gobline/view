@@ -18,6 +18,7 @@ use Gobline\Application\Middleware\MiddlewareDispatcher;
 use Gobline\View\Helper\BasePath\BasePath;
 use Gobline\View\Helper\Asset\Css\Css;
 use Gobline\View\Helper\Asset\Collection\CssCollection;
+use Gobline\View\Helper\Asset\Collection\CssCollectionFactory;
 use Gobline\View\Helper\Description\Description;
 use Gobline\View\Helper\Escape\Escape;
 use Gobline\View\Helper\Flash\Flash;
@@ -26,6 +27,7 @@ use Gobline\View\Helper\Hreflang\Hreflang;
 use Gobline\View\Helper\Identity\Identity;
 use Gobline\View\Helper\Asset\Js\Js;
 use Gobline\View\Helper\Asset\Collection\JsCollection;
+use Gobline\View\Helper\Asset\Collection\JsCollectionFactory;
 use Gobline\View\Helper\Lang\Lang;
 use Gobline\View\Helper\Meta\Meta;
 use Gobline\View\Helper\NoIndex\NoIndex;
@@ -77,7 +79,7 @@ class ViewHelperContainer extends Container
         }, false);
 
         $this->set(CssCollection::class, function () {
-            return new CssCollection($this->eventDispatcher, $this->container->get(Environment::class), new Minifier());
+            return new CssCollectionFactory($this->eventDispatcher, $this->container->get(Environment::class), new Minifier());
         }, false);
 
         $this->set(Description::class, function () {
@@ -109,7 +111,7 @@ class ViewHelperContainer extends Container
         }, false);
 
         $this->set(JsCollection::class, function () {
-            return new JsCollection($this->eventDispatcher, $this->container->get(Environment::class), new Minifier());
+            return new JsCollectionFactory($this->eventDispatcher, $this->container->get(Environment::class), new Minifier());
         }, false);
 
         $this->set(Lang::class, function () {

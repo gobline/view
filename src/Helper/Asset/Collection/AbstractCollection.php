@@ -11,10 +11,9 @@
 
 namespace Gobline\View\Helper\Asset\Collection;
 
-use Gobline\View\Helper\Asset\AssetVersions;
 use Gobline\View\Helper\Asset\MinifierInterface;
-use Gobline\View\Helper\Asset\ModuleAssetCopier;
 use Gobline\View\Helper\AbstractViewEventSubscriber;
+use Gobline\Environment\Environment;
 
 /**
  * @author Mathieu Decaffmeyer <mdecaffmeyer@gmail.com>
@@ -23,23 +22,18 @@ abstract class AbstractCollection extends AbstractViewEventSubscriber
 {
     protected $collection;
     private $minify = false;
-    private $assetVersions;
+    private $noCache = false;
     private $minifier;
-    private $moduleAssetCopier;
-    private $baseUrl;
+    private $basePath;
 
     public function __construct(
         Collection $collection,
-        AssetVersions $assetVersions,
-        MinifierInterface $minifier,
-        ModuleAssetCopier $moduleAssetCopier,
-        $baseUrl
+        Environment $environment,
+        MinifierInterface $minifier
     ) {
         $this->collection = $collection;
-        $this->assetVersions = $assetVersions;
         $this->minifier = $minifier;
-        $this->moduleAssetCopier = $moduleAssetCopier;
-        $this->baseUrl = $baseUrl;
+        $this->basePath = $environment->getBasePath();
     }
 
     public function minify($path)
@@ -49,17 +43,11 @@ abstract class AbstractCollection extends AbstractViewEventSubscriber
         return $this;
     }
 
-    private function computeVersion(Collection $collection)
+    public function noCache()
     {
-        $sumVersions = 0;
-        foreach ($collection as $asset) {
-            $version = $this->assetVersions->getVersion($asset->getPath());
-            if ($version) {
-                $sumVersions += $version;
-            }
-        }
+        $this->noCache = true;
 
-        return $sumVersions;
+        return $this;
     }
 
     private function merge(Collection $collection)
@@ -78,9 +66,6 @@ abstract class AbstractCollection extends AbstractViewEventSubscriber
                     $merged .= $content;
                 }
             } else {
-                if ($asset->isModuleAsset()) {
-                    $this->moduleAssetCopier->copy($asset);
-                }
                 $merged .= file_get_contents(getcwd().'/public/'.$asset->getPath());
             }
         }
@@ -103,26 +88,22 @@ abstract class AbstractCollection extends AbstractViewEventSubscriber
         if ($this->collection->getIeConditionalComment()) {
             echo '<!--[if '.$this->collection->getIeConditionalComment()."]>\n";
         }
-        $version = $this->computeVersion($this->collection);
         $path = $this->minify ?: $this->collection->getPath();
-        if ($version) {
-            $pathinfo = pathinfo($path);
-            $path = $pathinfo['dirname'].'/'.$pathinfo['filename'].'.'.$version.'.'.$pathinfo['extension'];
-        }
         $absolutePath = getcwd().'/public/'.$path;
         if (!is_file($absolutePath)) {
             $content = $this->merge($this->collection);
             if ($this->minify) {
                 $content = $this->minifier->minify($content);
-                $this->save($absolutePath, $content);
-                $this->printHtml($this->baseUrl.'/'.$path);
-            } else {
-                $this->save($absolutePath, $content);
-                $this->printHtml($this->baseUrl.'/'.$path);
             }
-        } else {
-            $this->printHtml($this->baseUrl.'/'.$path);
+            $this->save($absolutePath, $content);
         }
+
+        if ($this->noCache) {
+            $path .= '?v='.strtotime('now');
+        }
+
+        $this->printHtml($this->basePath.'/'.$path);
+
         if ($this->collection->getIeConditionalComment()) {
             echo "<![endif]-->\n";
         }
