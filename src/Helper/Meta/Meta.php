@@ -13,7 +13,7 @@ namespace Gobline\View\Helper\Meta;
 
 use Gobline\View\Helper\ViewHelperInterface;
 use Gobline\View\Helper\AbstractViewEventSubscriber;
-use Gobline\Mediator\EventDispatcherInterface;
+use Gobline\View\Helper\ViewEventDispatcher;
 
 /**
  * @author Mathieu Decaffmeyer <mdecaffmeyer@gmail.com>
@@ -23,7 +23,7 @@ class Meta extends AbstractViewEventSubscriber implements ViewHelperInterface
     private $eventDispatcher;
     private $metas = [];
 
-    public function __construct(EventDispatcherInterface $eventDispatcher)
+    public function __construct(ViewEventDispatcher $eventDispatcher)
     {
         $this->eventDispatcher = $eventDispatcher;
     }

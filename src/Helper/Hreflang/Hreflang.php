@@ -13,7 +13,7 @@ namespace Gobline\View\Helper\Hreflang;
 
 use Gobline\View\Helper\ViewHelperInterface;
 use Gobline\View\Helper\AbstractViewEventSubscriber;
-use Gobline\Mediator\EventDispatcherInterface;
+use Gobline\View\Helper\ViewEventDispatcher;
 use Gobline\Router\UriBuilder;
 use Gobline\Router\RouteData;
 use Gobline\Environment\Environment;
@@ -28,7 +28,7 @@ class Hreflang extends AbstractViewEventSubscriber implements ViewHelperInterfac
     private $environment;
 
     public function __construct(
-        EventDispatcherInterface $eventDispatcher,
+        ViewEventDispatcher $eventDispatcher,
         Environment $environment,
         UriBuilder $uriBuilder
     ) {

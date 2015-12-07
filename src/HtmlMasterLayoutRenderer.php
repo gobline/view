@@ -11,7 +11,7 @@
 
 namespace Gobline\View;
 
-use Gobline\View\Helper\ViewHelperContainer;
+use Gobline\View\Helper\ViewHelperRegistry;
 use Gobline\Mediator\EventDispatcher;
 
 /**
@@ -20,17 +20,13 @@ use Gobline\Mediator\EventDispatcher;
 class HtmlMasterLayoutRenderer implements ViewRendererInterface
 {
     private $htmlRenderer;
-    private $eventDispatcher;
+    private $viewEventDispatcher;
 
-    public function __construct(ViewRendererInterface $htmlRenderer, ViewHelperContainer $helperContainer = null)
+    public function __construct(ViewRendererInterface $htmlRenderer, ViewHelperRegistry $viewHelperRegistry)
     {
         $this->htmlRenderer = $htmlRenderer;
 
-        if ($helperContainer) {
-            $this->eventDispatcher = $helperContainer->getEventDispatcher();
-        } else {
-            $this->eventDispatcher = new EventDispatcher();
-        }
+        $this->viewEventDispatcher = $viewHelperRegistry->getViewEventDispatcher();
     }
 
     public function render($template, $model)
@@ -38,49 +34,48 @@ class HtmlMasterLayoutRenderer implements ViewRendererInterface
         $content = $this->htmlRenderer->render($template, $model);
 
         ob_start();
-        try {
-            echo "<!DOCTYPE html>\n";
-            echo '<html';
-            $this->eventDispatcher->dispatch('htmlAttributes');
-            echo ">\n";
 
-            echo "<head>\n";
-            $this->eventDispatcher->dispatch('headOpened');
-            echo "<meta charset=\"utf-8\">\n";
-            echo "<meta http-equiv=\"X-UA-Compatible\" content=\"IE=Edge\">\n";
+        echo "<!DOCTYPE html>\n";
+        echo '<html';
+        $this->viewEventDispatcher->dispatch('htmlAttributes');
+        echo ">\n";
 
-            $this->eventDispatcher->dispatch('meta');
+        echo "<head>\n";
+        $this->viewEventDispatcher->dispatch('headOpened');
+        echo "<meta charset=\"utf-8\">\n";
+        echo "<meta http-equiv=\"X-UA-Compatible\" content=\"IE=Edge\">\n";
 
-            echo '<title>';
-            $this->eventDispatcher->dispatch('headTitle');
-            echo "</title>\n";
+        $this->viewEventDispatcher->dispatch('meta');
 
-            // print <link> elements (other than stylesheets)
-            $this->eventDispatcher->dispatch('headLinks');
+        echo '<title>';
+        $this->viewEventDispatcher->dispatch('headTitle');
+        echo "</title>\n";
 
-            // print stylesheets
-            $this->eventDispatcher->dispatch('headStylesheets');
+        // print <link> elements (other than stylesheets)
+        $this->viewEventDispatcher->dispatch('headLinks');
 
-            // print scripts
-            $this->eventDispatcher->dispatch('headScripts');
+        // print stylesheets
+        $this->viewEventDispatcher->dispatch('headStylesheets');
 
-            // print close head, open body
-            echo "</head>\n<body";
-            $this->eventDispatcher->dispatch('bodyAttributes');
-            echo ">\n";
-            $this->eventDispatcher->dispatch('bodyOpened');
+        // print scripts
+        $this->viewEventDispatcher->dispatch('headScripts');
 
-            // print body content
-            echo $content;
+        // print close head, open body
+        echo "</head>\n<body";
+        $this->viewEventDispatcher->dispatch('bodyAttributes');
+        echo ">\n";
+        $this->viewEventDispatcher->dispatch('bodyOpened');
 
-            // print scripts
-            $this->eventDispatcher->dispatch('bodyScripts');
+        // print body content
+        echo $content;
 
-            // print close body, close html
-            echo "\n</body>\n</html>";
-        } finally {
-            $content = ob_get_clean();
-        }
+        // print scripts
+        $this->viewEventDispatcher->dispatch('bodyScripts');
+
+        // print close body, close html
+        echo "\n</body>\n</html>";
+
+        $content = ob_get_clean();
 
         return $content;
     }

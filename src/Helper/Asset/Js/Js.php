@@ -14,7 +14,7 @@ namespace Gobline\View\Helper\Asset\Js;
 use Gobline\View\Helper\ViewHelperInterface;
 use Gobline\View\Helper\Asset\AbstractAssetHelper;
 use Gobline\View\Helper\Asset\MinifierInterface;
-use Gobline\Mediator\EventDispatcherInterface;
+use Gobline\View\Helper\ViewEventDispatcher;
 use Gobline\Environment\Environment;
 
 /**
@@ -25,7 +25,7 @@ class Js extends AbstractAssetHelper implements ViewHelperInterface
     private $eventDispatcher;
 
     public function __construct(
-        EventDispatcherInterface $eventDispatcher,
+        ViewEventDispatcher $eventDispatcher,
         Environment $environment,
         MinifierInterface $minifier
     ) {

@@ -11,36 +11,31 @@
 
 namespace Gobline\View;
 
-use Gobline\View\Helper\ViewHelperContainer;
+use Gobline\View\Helper\ViewHelperRegistry;
 
 /**
  * @author Mathieu Decaffmeyer <mdecaffmeyer@gmail.com>
  */
 class HtmlTemplateRenderer implements ViewRendererInterface
 {
-    use ViewHelperTrait;
+    private $viewHelperRegistry;
 
-    public function __construct(ViewHelperContainer $helperContainer = null)
+    public function __construct(ViewHelperRegistry $viewHelperRegistry)
     {
-        if ($helperContainer) {
-            $this->setHelperContainer($helperContainer);
-        }
+        $this->viewHelperRegistry = $viewHelperRegistry;
     }
 
     public function partial($template, array $data = [])
     {
         $render = function () use ($template, $data) {
-            extract($this->getViewHelpers());
+            extract($this->viewHelperRegistry->getArrayCopy());
             extract($data);
             include $template;
         };
 
         ob_start();
-        try {
-            render();
-        } finally {
-            $content = ob_get_clean();
-        }
+        $render();
+        $content = ob_get_clean();
 
         return $content;
     }
@@ -48,15 +43,13 @@ class HtmlTemplateRenderer implements ViewRendererInterface
     public function render($template, $model)
     {
         $render = function () use ($model, $template) {
-            extract($this->getViewHelpers());
+            extract($this->viewHelperRegistry->getArrayCopy());
             include $template;
         };
+
         ob_start();
-        try {
-            $render();
-        } finally {
-            $content = ob_get_clean();
-        }
+        $render();
+        $content = ob_get_clean();
 
         return $content;
     }

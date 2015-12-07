@@ -13,7 +13,7 @@ namespace Gobline\View\Helper\Asset\Collection;
 
 use Gobline\View\Helper\Asset\MinifierInterface;
 use Gobline\View\Helper\Asset\Js\Script;
-use Gobline\Mediator\EventDispatcherInterface;
+use Gobline\View\Helper\ViewEventDispatcher;
 use Gobline\Environment\Environment;
 
 /**
@@ -23,7 +23,7 @@ class JsCollection extends AbstractCollection
 {
     public function __construct(
         Collection $collection,
-        EventDispatcherInterface $eventDispatcher,
+        ViewEventDispatcher $eventDispatcher,
         Environment $environment,
         MinifierInterface $minifier
     ) {

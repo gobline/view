@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Gobline\View;
+namespace Gobline\View\Helper;
 
 /**
  * @author Mathieu Decaffmeyer <mdecaffmeyer@gmail.com>

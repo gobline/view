@@ -13,7 +13,7 @@ namespace Gobline\View\Helper\Responsive;
 
 use Gobline\View\Helper\ViewHelperInterface;
 use Gobline\View\Helper\AbstractViewEventSubscriber;
-use Gobline\Mediator\EventDispatcherInterface;
+use Gobline\View\Helper\ViewEventDispatcher;
 
 /**
  * @author Mathieu Decaffmeyer <mdecaffmeyer@gmail.com>
@@ -22,7 +22,7 @@ class Responsive extends AbstractViewEventSubscriber implements ViewHelperInterf
 {
     private $eventDispatcher;
 
-    public function __construct(EventDispatcherInterface $eventDispatcher)
+    public function __construct(ViewEventDispatcher $eventDispatcher)
     {
         $this->eventDispatcher = $eventDispatcher;
     }

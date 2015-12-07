@@ -13,7 +13,7 @@ namespace Gobline\View\Helper\Lang;
 
 use Gobline\View\Helper\ViewHelperInterface;
 use Gobline\View\Helper\AbstractViewEventSubscriber;
-use Gobline\Mediator\EventDispatcherInterface;
+use Gobline\View\Helper\ViewEventDispatcher;
 use Gobline\Environment\Environment;
 
 /**

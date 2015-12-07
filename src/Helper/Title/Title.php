@@ -13,7 +13,7 @@ namespace Gobline\View\Helper\Title;
 
 use Gobline\View\Helper\ViewHelperInterface;
 use Gobline\View\Helper\AbstractViewEventSubscriber;
-use Gobline\Mediator\EventDispatcherInterface;
+use Gobline\View\Helper\ViewEventDispatcher;
 
 /**
  * @author Mathieu Decaffmeyer <mdecaffmeyer@gmail.com>
@@ -24,7 +24,7 @@ class Title extends AbstractViewEventSubscriber implements ViewHelperInterface
     private $title;
     private $suffix = '';
 
-    public function __construct(EventDispatcherInterface $eventDispatcher)
+    public function __construct(ViewEventDispatcher $eventDispatcher)
     {
         $this->eventDispatcher = $eventDispatcher;
     }

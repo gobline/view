@@ -12,7 +12,7 @@
 namespace Gobline\View\Helper\Flash;
 
 use Gobline\View\Helper\ViewHelperInterface;
-use Gobline\Flash\FlashInterface;
+use Gobline\Flash\Flash as FlashComponent;
 
 /**
  * @author Mathieu Decaffmeyer <mdecaffmeyer@gmail.com>
@@ -21,7 +21,7 @@ class Flash implements ViewHelperInterface
 {
     private $flash;
 
-    public function __construct(FlashInterface $flash)
+    public function __construct(FlashComponent $flash)
     {
         $this->flash = $flash;
     }

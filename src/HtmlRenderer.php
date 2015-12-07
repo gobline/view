@@ -11,7 +11,7 @@
 
 namespace Gobline\View;
 
-use Gobline\View\Helper\ViewHelperContainer;
+use Gobline\View\Helper\ViewHelperRegistry;
 
 /**
  * @author Mathieu Decaffmeyer <mdecaffmeyer@gmail.com>
@@ -21,16 +21,13 @@ class HtmlRenderer implements ViewRendererInterface
     private $renderer;
     private $layoutRenderer;
     private $templateRenderer;
-    private $helperContainer;
     private $layoutsEnabled = true;
 
-    public function __construct(ViewHelperContainer $helperContainer = null)
+    public function __construct(ViewHelperRegistry $viewHelperRegistry)
     {
-        $this->templateRenderer = new HtmlTemplateRenderer($helperContainer);
-        $this->layoutRenderer = new HtmlLayoutRenderer($this->templateRenderer, $helperContainer);
-        $this->renderer = new HtmlMasterLayoutRenderer($this->layoutRenderer, $helperContainer);
-
-        $this->helperContainer = $helperContainer;
+        $this->templateRenderer = new HtmlTemplateRenderer($viewHelperRegistry);
+        $this->layoutRenderer = new HtmlLayoutRenderer($this->templateRenderer, $viewHelperRegistry);
+        $this->renderer = new HtmlMasterLayoutRenderer($this->layoutRenderer, $viewHelperRegistry);
     }
 
     public function render($template, $model)
