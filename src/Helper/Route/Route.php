@@ -94,6 +94,7 @@ class Route implements ViewHelperInterface
         $_GET = [];
 
         $request = $originalRequest
+                    ->withMethod('GET')
                     ->withAttribute('_isSubRequest', true)
                     ->withParsedBody([])
                     ->withQueryParams($this->data->getParams())
