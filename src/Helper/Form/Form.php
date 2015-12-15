@@ -13,8 +13,6 @@ namespace Gobline\View\Helper\Form;
 
 use Gobline\View\Helper\ViewHelperInterface;
 use Gobline\Form\Form as ModelForm;
-use Gobline\Environment\Environment;
-use Gobline\Translator\Translator;
 
 /**
  * @author Mathieu Decaffmeyer <mdecaffmeyer@gmail.com>
@@ -24,13 +22,11 @@ class Form implements ViewHelperInterface
     use HelperTrait;
 
     private $containers = [];
-    private $environment;
     private $translator;
 
-    public function __construct(Translator $translator = null, Environment $environment = null)
+    public function __construct(Translator $translator)
     {
         $this->translator = $translator;
-        $this->environment = $environment;
     }
 
     public static function getName()
@@ -95,10 +91,9 @@ class Form implements ViewHelperInterface
 
         $legend = $fieldSet->getLegend();
         if ($legend) {
-            if ($this->translator) {
-                $legend = $this->translator->translate($legend, [], $this->environment->getLanguage());
-                $fieldSet->setLegend($legend);
-            }
+            $legend = $this->translator->translate($legend);
+            $fieldSet->setLegend($legend);
+
             $str .= '<legend>'.$legend."</legend>\n";
         }
 
@@ -141,9 +136,9 @@ class Form implements ViewHelperInterface
             $element->setAttribute('id', 'form-element-'.$this->hyphenate($element->getAttribute('name')));
         }
 
-        if ($element->hasAttribute('placeholder') && $this->translator) {
+        if ($element->hasAttribute('placeholder')) {
             $placeholder = $element->getAttribute('placeholder');
-            $placeholder = $this->translator->translate($placeholder, [], $this->environment->getLanguage());
+            $placeholder = $this->translator->translate($placeholder);
             $element->setAttribute('placeholder', $placeholder);
         }
 
@@ -175,10 +170,8 @@ class Form implements ViewHelperInterface
 
             $label = $element->getLabel();
 
-            if ($this->translator) {
-                $label = $this->translator->translate($label, [], $this->environment->getLanguage());
-                $element->setLabel($label);
-            }
+            $label = $this->translator->translate($label);
+            $element->setLabel($label);
 
             $str .= '<span>'.$label."</span>\n";
         }
@@ -198,10 +191,8 @@ class Form implements ViewHelperInterface
 
             $label = $element->getLabel();
 
-            if ($this->translator) {
-                $label = $this->translator->translate($label, [], $this->environment->getLanguage());
-                $element->setLabel($label);
-            }
+            $label = $this->translator->translate($label);
+            $element->setLabel($label);
 
             $str .= '<span>'.$label.'</span>';
         }
@@ -218,10 +209,8 @@ class Form implements ViewHelperInterface
 
         $label = $element->getLabel();
 
-        if ($this->translator) {
-            $label = $this->translator->translate($label, [], $this->environment->getLanguage());
-            $element->setLabel($label);
-        }
+        $label = $this->translator->translate($label);
+        $element->setLabel($label);
 
         if ($attributes === null) {
             $attributes = $this->labelAttributes ?: [];
