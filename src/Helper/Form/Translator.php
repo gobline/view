@@ -35,6 +35,6 @@ class Translator
             return $str;
         }
 
-        return $this->translator->translate($str, [], $language);
+        return $this->translator->translate($str, [], $this->language);
     }
 }
