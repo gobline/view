@@ -89,8 +89,16 @@ class Row
         } catch (\Exception $exception) {
             $previousHandler = set_exception_handler(function () {});
             restore_error_handler();
-            call_user_func($previousHandler, $exception);
-            die;
+
+            if ($previousHandler) {
+                call_user_func($previousHandler, $exception);
+                die;
+            }
+
+            $str = "<!--\n";
+            $str .= $exception->getMessage()."<br>";
+            $str .= $exception->getTraceAsString();
+            $str .= "\n-->";
         }
 
         return $str;
