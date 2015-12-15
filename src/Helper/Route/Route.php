@@ -84,6 +84,8 @@ class Route implements ViewHelperInterface
         $uri = $this->uri();
 
         $originalRequest = $this->environment->getRequest();
+        $originalMatchedRouteName = $this->environment->getMatchedRouteName();
+        $originalMatchedRouteParams = $this->environment->getMatchedRouteParams();
 
         $post = $_POST;
         $_POST = [];
@@ -106,6 +108,8 @@ class Route implements ViewHelperInterface
         $response = $this->dispatcher->dispatch($request, new Response(), $suppressErrors);
 
         $this->environment->setRequest($originalRequest);
+        $this->environment->setMatchedRouteName($originalMatchedRouteName);
+        $this->environment->setMatchedRouteParams($originalMatchedRouteParams);
 
         $_POST = $post;
         $_GET = $get;
