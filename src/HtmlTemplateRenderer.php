@@ -42,6 +42,10 @@ class HtmlTemplateRenderer implements ViewRendererInterface
 
     public function render($template, $model)
     {
+        if (!$template) {
+            return '';
+        }
+
         $render = function () use ($model, $template) {
             extract($this->viewHelperRegistry->getArrayCopy());
             include $template;
