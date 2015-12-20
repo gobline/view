@@ -33,7 +33,7 @@ class Flash implements ViewHelperInterface
 
     public function next($name, $value)
     {
-        return $this->flash->next($name, $value);
+        $this->flash->next($name, $value);
     }
 
     public function has($name)
