@@ -56,7 +56,7 @@ class Escape implements ViewHelperInterface
         return $this->escaper->escapeCss($string);
     }
 
-    public function escapeHtmlAttr($string)
+    public function htmlAttr($string)
     {
         return $this->escaper->escapeHtml($string);
     }
