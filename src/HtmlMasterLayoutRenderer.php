@@ -43,7 +43,6 @@ class HtmlMasterLayoutRenderer implements ViewRendererInterface
         echo "<head>\n";
         $this->viewEventDispatcher->dispatch('headOpened');
         echo "<meta charset=\"utf-8\">\n";
-        echo "<meta http-equiv=\"X-UA-Compatible\" content=\"IE=Edge\">\n";
 
         $this->viewEventDispatcher->dispatch('meta');
 
