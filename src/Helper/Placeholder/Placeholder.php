@@ -22,7 +22,7 @@ class Placeholder implements ViewHelperInterface
 
     public static function getName()
     {
-        return 'placeHolder';
+        return 'placeholder';
     }
 
     public function __invoke(...$args)
