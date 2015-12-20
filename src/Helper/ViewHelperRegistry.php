@@ -30,6 +30,7 @@ use Gobline\View\Helper\Lang\Lang;
 use Gobline\View\Helper\Meta\Meta;
 use Gobline\View\Helper\NoIndex\NoIndex;
 use Gobline\View\Helper\Placeholder\Placeholder;
+use Gobline\View\Helper\Render\Render;
 use Gobline\View\Helper\Responsive\Responsive;
 use Gobline\View\Helper\Route\Route;
 use Gobline\View\Helper\Title\Title;
@@ -127,6 +128,9 @@ class ViewHelperRegistry
 
         $this->container->share(Placeholder::class);
         $this->add(Placeholder::class);
+
+        $this->container->share(Render::class);
+        $this->add(Render::class);
 
         $this->container->share(Responsive::class);
         $this->add(Responsive::class);

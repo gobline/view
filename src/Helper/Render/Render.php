@@ -9,14 +9,15 @@
  * file that was distributed with this source code.
  */
 
-namespace Gobline\View;
+namespace Gobline\View\Helper\Render;
 
+use Gobline\View\Helper\ViewHelperInterface;
 use Gobline\View\Helper\ViewHelperRegistry;
 
 /**
  * @author Mathieu Decaffmeyer <mdecaffmeyer@gmail.com>
  */
-class HtmlTemplateRenderer implements ViewRendererInterface
+class Render implements ViewHelperInterface
 {
     private $viewHelperRegistry;
 
@@ -25,16 +26,21 @@ class HtmlTemplateRenderer implements ViewRendererInterface
         $this->viewHelperRegistry = $viewHelperRegistry;
     }
 
-    public function render($template, $model)
+    public static function getName()
     {
-        if (!$template) {
-            return '';
-        }
+        return 'render';
+    }
 
-        $render = function () use ($model, $template) {
+    public function __invoke($template, array $data = [], $context = null)
+    {
+        $render = function () use ($template, $data) {
             extract($this->viewHelperRegistry->getArrayCopy());
+            extract($data);
             include $template;
         };
+        if ($context) {
+            $render = $render->bindTo($context);
+        }
 
         ob_start();
         $render();
