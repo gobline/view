@@ -24,7 +24,7 @@ class Lang extends AbstractViewEventSubscriber implements ViewHelperInterface
     private $eventDispatcher;
     private $environment;
 
-    public function __construct(EventDispatcherInterface $eventDispatcher, Environment $environment)
+    public function __construct(ViewEventDispatcher $eventDispatcher, Environment $environment)
     {
         $this->eventDispatcher = $eventDispatcher;
         $this->environment = $environment;
