@@ -39,7 +39,7 @@ class Hreflang extends AbstractViewEventSubscriber implements ViewHelperInterfac
 
     public static function getName()
     {
-        return 'hrefLang';
+        return 'hreflang';
     }
 
     public function __invoke($hreflang = true)
@@ -57,12 +57,14 @@ class Hreflang extends AbstractViewEventSubscriber implements ViewHelperInterfac
     public function onHeadLinks()
     {
         $routeData = new RouteData(
-            $this->environment->getRouteName(),
-            $this->environment->getRouteParams());
+            $this->environment->getMatchedRouteName(),
+            $this->environment->getMatchedRouteParams());
 
         foreach ($this->environment->getSupportedLanguages() as $language) {
-            echo '<link rel="alternate" hreflang="'.$language.'" href="'.
-                $this->uriBuilder->buildUri($routeData, $language)."\">\n";
+            $uri = $this->uriBuilder->buildUri($routeData, $language);
+            $uri = $this->environment->buildUri($uri, $language, true);
+
+            echo '<link rel="alternate" hreflang="'.$language.'" href="'.$uri."\">\n";
         }
     }
 
