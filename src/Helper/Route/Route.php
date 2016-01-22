@@ -141,7 +141,7 @@ class Route implements ViewHelperInterface
             return $this->activeClass;
         }
 
-        if (array_diff_assoc($this->data->getParams(), $request->getAttributes())) {
+        if (array_diff_assoc($this->data->getParams(), $matchedRouteParams)) {
             return;
         }
 
