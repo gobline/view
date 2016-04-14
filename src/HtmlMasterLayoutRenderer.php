@@ -41,8 +41,8 @@ class HtmlMasterLayoutRenderer implements ViewRendererInterface
         echo ">\n";
 
         echo "<head>\n";
-        $this->viewEventDispatcher->dispatch('headOpened');
         echo "<meta charset=\"utf-8\">\n";
+        $this->viewEventDispatcher->dispatch('headOpened');
 
         $this->viewEventDispatcher->dispatch('meta');
 
