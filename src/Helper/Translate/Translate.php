@@ -34,7 +34,7 @@ class Translate implements ViewHelperInterface
         return 'translate';
     }
 
-    public function __invoke($str, array $params = null, $language = null)
+    public function __invoke($str, $params = null, $language = null)
     {
         if (!$language) {
             $language = $this->environment->getLanguage() ?: null;
