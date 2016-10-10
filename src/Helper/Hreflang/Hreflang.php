@@ -60,9 +60,16 @@ class Hreflang extends AbstractViewEventSubscriber implements ViewHelperInterfac
             $this->environment->getMatchedRouteName(),
             $this->environment->getMatchedRouteParams());
 
+        $queryString = '';
+        $queryParams = $this->environment->getRequest()->getQueryParams();
+        if ($queryParams) {
+            $queryString = '?'.http_build_query($queryParams);
+        }
+
         foreach ($this->environment->getSupportedLanguages() as $language) {
             $uri = $this->uriBuilder->buildUri($routeData, $language);
             $uri = $this->environment->buildUri($uri, $language, true);
+            $uri .= $queryString;
 
             echo '<link rel="alternate" hreflang="'.$language.'" href="'.$uri."\">\n";
         }
