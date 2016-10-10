@@ -25,6 +25,7 @@ use Zend\Diactoros\Response\RedirectResponse;
  */
 class Route implements ViewHelperInterface
 {
+    private $data;
     private $environment;
     private $uriBuilder;
     private $routeData;
@@ -70,6 +71,28 @@ class Route implements ViewHelperInterface
     public function url($language = null)
     {
         return $this->uri($language, true);
+    }
+
+    public function self($language = null, $absolute = false)
+    {
+        $routeData = new RouteData(
+            $this->environment->getMatchedRouteName(),
+            $this->environment->getMatchedRouteParams());
+
+        if (!$language) {
+            $language = $this->environment->getLanguage();
+        }
+
+        $uri = $this->uriBuilder->buildUri($routeData, $language);
+        $uri = $this->environment->buildUri($uri, $language, $absolute);
+
+        $queryString = '';
+        $queryParams = $this->environment->getRequest()->getQueryParams();
+        if ($queryParams) {
+            $queryString = '?'.http_build_query($queryParams);
+        }
+
+        return $uri.$queryString;
     }
 
     public function redirect($status = 302)
