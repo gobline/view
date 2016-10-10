@@ -34,7 +34,7 @@ class Data
 
     public function __toString()
     {
-        $this->helper->__toString();
+        return $this->helper->__toString();
     }
 
     public function params($params)
