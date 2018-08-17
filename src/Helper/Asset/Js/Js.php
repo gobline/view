@@ -38,17 +38,17 @@ class Js extends AbstractAssetHelper implements ViewHelperInterface
         return 'js';
     }
 
-    public function __invoke($path, $location = 'body')
+    public function __invoke($path, $location = 'body', $attributes = [])
     {
-        $this->asset = new Script($path, $location);
+        $this->asset = new Script($path, $location, $attributes);
         $this->eventDispatcher->addSubscriber($this);
 
         return $this;
     }
 
-    protected function printReference($path)
+    protected function printReference($path, $attributes)
     {
-        echo '<script src="'.$path."\"></script>\n";
+        echo '<script src="'.$path."\"".($attributes ?: "")."></script>\n";
     }
 
     protected function printInternalContent($data)

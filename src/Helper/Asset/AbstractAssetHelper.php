@@ -56,12 +56,26 @@ abstract class AbstractAssetHelper extends AbstractViewEventSubscriber
         return $this;
     }
 
-    abstract protected function printReference($path);
+    abstract protected function printReference($path, $attributes);
 
     abstract protected function printInternalContent($data);
 
     protected function printAsset()
     {
+        $attributes = "";
+        $attributesMap = $this->asset->getAttributes();
+        if ($attributesMap) {
+            $attributes = ' '.join(' ', array_map(function($key) use ($attributesMap) {
+                if($attributesMap[$key] === '') {
+                    return $key;
+                }
+                if(is_bool($attributesMap[$key])) {
+                    return $key.'="'.($attributesMap[$key] ? 'true' : 'false').'"';
+                }
+                return $key.'="'.$attributesMap[$key].'"';
+            }, array_keys($attributesMap)));
+        }
+
         if ($this->asset->isExternal()) {
             if ($this->localize) {
                 $path = getcwd().'/public/'.$this->localize;
@@ -80,13 +94,13 @@ abstract class AbstractAssetHelper extends AbstractViewEventSubscriber
                         file_put_contents($path, $content);
                         $this->asset->setPath($this->localize);
                     } else {
-                        $this->printReference($this->asset->getPath());
+                        $this->printReference($this->asset->getPath(), $attributes);
                     }
                 } else {
                     $this->asset->setPath($this->localize);
                 }
             } else {
-                $this->printReference($this->asset->getPath());
+                $this->printReference($this->asset->getPath(), $attributes);
             }
         } else {
             if (
@@ -100,7 +114,7 @@ abstract class AbstractAssetHelper extends AbstractViewEventSubscriber
                     if ($this->noCache) {
                         $path .= '?v='.strtotime('now');
                     }
-                    $this->printReference($path);
+                    $this->printReference($path, $attributes);
                 } else {
                     $minifyPath = $this->minify;
                     if (!is_file(getcwd().'/public/'.$minifyPath)) {
@@ -115,7 +129,7 @@ abstract class AbstractAssetHelper extends AbstractViewEventSubscriber
                     if ($this->noCache) {
                         $minifyPath .= '?v='.strtotime('now');
                     }
-                    $this->printReference($this->basePath.'/'.$minifyPath);
+                    $this->printReference($this->basePath.'/'.$minifyPath, $attributes);
                 }
             }
         }

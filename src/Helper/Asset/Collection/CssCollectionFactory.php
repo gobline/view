@@ -41,11 +41,11 @@ class CssCollectionFactory implements ViewHelperInterface
         return 'cssCollection';
     }
 
-    public function __invoke($path)
+    public function __invoke($path, $attributes = [])
     {
         if (!isset($this->collections[$path])) {
             $this->collections[$path] = new CssCollection(
-                new Collection($path, 'head'),
+                new Collection($path, 'head', $attributes),
                 $this->eventDispatcher,
                 $this->environment,
                 $this->minifier);

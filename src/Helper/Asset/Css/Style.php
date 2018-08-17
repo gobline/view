@@ -18,8 +18,8 @@ use Gobline\View\Helper\Asset\AbstractAsset;
  */
 class Style extends AbstractAsset
 {
-    public function __construct($path)
+    public function __construct($path, $attributes = [])
     {
-        parent::__construct($path, 'head');
+        parent::__construct($path, 'head', $attributes);
     }
 }

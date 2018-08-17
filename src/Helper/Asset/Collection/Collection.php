@@ -23,11 +23,13 @@ class Collection implements IteratorAggregate
     private $assets = [];
     private $path;
     private $location;
+    private $attributes;
 
-    public function __construct($path, $location = 'head')
+    public function __construct($path, $location = 'head', $attributes = [])
     {
         $this->path = $path;
         $this->location = $location;
+        $this->attributes = $attributes;
     }
 
     public function add(AbstractAsset $asset)

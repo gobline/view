@@ -19,11 +19,13 @@ abstract class AbstractAsset
     protected $path;
     protected $location;
     protected $isExternal;
+    protected $attributes;
 
-    public function __construct($path, $location)
+    public function __construct($path, $location, $attributes = [])
     {
         $this->path = $path;
         $this->location = $location;
+        $this->attributes = $attributes;
         $this->checkIsExternal();
     }
 
@@ -57,5 +59,10 @@ abstract class AbstractAsset
     public function isExternal()
     {
         return $this->isExternal;
+    }
+
+    public function getAttributes()
+    {
+        return $this->attributes;
     }
 }

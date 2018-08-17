@@ -38,17 +38,17 @@ class Css extends AbstractAssetHelper implements ViewHelperInterface
         return 'css';
     }
 
-    public function __invoke($path)
+    public function __invoke($path, $attributes = [])
     {
-        $this->asset = new Style($path);
+        $this->asset = new Style($path, $attributes);
         $this->eventDispatcher->addSubscriber($this);
 
         return $this;
     }
 
-    protected function printReference($path)
+    protected function printReference($path, $attributes)
     {
-        echo '<link rel="stylesheet" href="'.$path."\">\n";
+        echo '<link rel="stylesheet" href="'.$path."\"".($attributes ?: "").">\n";
     }
 
     protected function printInternalContent($data)
