@@ -28,6 +28,7 @@ use Gobline\View\Helper\Asset\Collection\JsCollection;
 use Gobline\View\Helper\Asset\Collection\JsCollectionFactory;
 use Gobline\View\Helper\Lang\Lang;
 use Gobline\View\Helper\Meta\Meta;
+use Gobline\View\Helper\Link\Link;
 use Gobline\View\Helper\NoIndex\NoIndex;
 use Gobline\View\Helper\Placeholder\Placeholder;
 use Gobline\View\Helper\Render\Render;
@@ -122,6 +123,9 @@ class ViewHelperRegistry
 
         $this->container->share(Meta::class);
         $this->add(Meta::class);
+
+        $this->container->share(Link::class);
+        $this->add(Link::class);
 
         $this->container->share(NoIndex::class);
         $this->add(NoIndex::class);
