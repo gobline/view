@@ -38,9 +38,9 @@ class Js extends AbstractAssetHelper implements ViewHelperInterface
         return 'js';
     }
 
-    public function __invoke($path, $location = 'body', $ieConditionalComment = null)
+    public function __invoke($path, $location = 'body')
     {
-        $this->asset = new Script($path, $location, $ieConditionalComment);
+        $this->asset = new Script($path, $location);
         $this->eventDispatcher->addSubscriber($this);
 
         return $this;

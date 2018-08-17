@@ -38,9 +38,9 @@ class Css extends AbstractAssetHelper implements ViewHelperInterface
         return 'css';
     }
 
-    public function __invoke($path, $ieConditionalComment = null)
+    public function __invoke($path)
     {
-        $this->asset = new Style($path, $ieConditionalComment);
+        $this->asset = new Style($path);
         $this->eventDispatcher->addSubscriber($this);
 
         return $this;

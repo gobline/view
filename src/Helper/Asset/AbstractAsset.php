@@ -19,13 +19,11 @@ abstract class AbstractAsset
     protected $path;
     protected $location;
     protected $isExternal;
-    protected $ieConditionalComment;
 
-    public function __construct($path, $location, $ieConditionalComment = null)
+    public function __construct($path, $location)
     {
         $this->path = $path;
         $this->location = $location;
-        $this->ieConditionalComment = $ieConditionalComment;
         $this->checkIsExternal();
     }
 
@@ -59,10 +57,5 @@ abstract class AbstractAsset
     public function isExternal()
     {
         return $this->isExternal;
-    }
-
-    public function getIeConditionalComment()
-    {
-        return $this->ieConditionalComment;
     }
 }

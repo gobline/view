@@ -18,8 +18,8 @@ use Gobline\View\Helper\Asset\AbstractAsset;
  */
 class Style extends AbstractAsset
 {
-    public function __construct($path, $ieConditionalComment = null)
+    public function __construct($path)
     {
-        parent::__construct($path, 'head', $ieConditionalComment);
+        parent::__construct($path, 'head');
     }
 }

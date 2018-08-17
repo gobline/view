@@ -41,11 +41,11 @@ class JsCollectionFactory implements ViewHelperInterface
         return 'jsCollection';
     }
 
-    public function __invoke($path, $location = 'body', $ieConditionalComment = null)
+    public function __invoke($path, $location = 'body')
     {
         if (!isset($this->collections[$path])) {
             $this->collections[$path] = new JsCollection(
-                new Collection($path, $location, $ieConditionalComment),
+                new Collection($path, $location),
                 $this->eventDispatcher,
                 $this->environment,
                 $this->minifier);

@@ -41,11 +41,11 @@ class CssCollectionFactory implements ViewHelperInterface
         return 'cssCollection';
     }
 
-    public function __invoke($path, $ieConditionalComment = null)
+    public function __invoke($path)
     {
         if (!isset($this->collections[$path])) {
             $this->collections[$path] = new CssCollection(
-                new Collection($path, 'head', $ieConditionalComment),
+                new Collection($path, 'head'),
                 $this->eventDispatcher,
                 $this->environment,
                 $this->minifier);

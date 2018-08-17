@@ -62,10 +62,6 @@ abstract class AbstractAssetHelper extends AbstractViewEventSubscriber
 
     protected function printAsset()
     {
-        if ($this->asset->getIeConditionalComment()) {
-            echo '<!--[if '.$this->asset->getIeConditionalComment()."]>\n";
-        }
-
         if ($this->asset->isExternal()) {
             if ($this->localize) {
                 $path = getcwd().'/public/'.$this->localize;
@@ -92,9 +88,7 @@ abstract class AbstractAssetHelper extends AbstractViewEventSubscriber
             } else {
                 $this->printReference($this->asset->getPath());
             }
-        }
-
-        if (!$this->asset->isExternal()) {
+        } else {
             if (
                 strpos($this->asset->getPath(), '{') ||
                 strpos($this->asset->getPath(), ';')
@@ -124,10 +118,6 @@ abstract class AbstractAssetHelper extends AbstractViewEventSubscriber
                     $this->printReference($this->basePath.'/'.$minifyPath);
                 }
             }
-        }
-
-        if ($this->asset->getIeConditionalComment()) {
-            echo "<![endif]-->\n";
         }
     }
 }

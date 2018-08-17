@@ -23,13 +23,11 @@ class Collection implements IteratorAggregate
     private $assets = [];
     private $path;
     private $location;
-    private $ieConditionalComment;
 
-    public function __construct($path, $location = 'head', $ieConditionalComment = null)
+    public function __construct($path, $location = 'head')
     {
         $this->path = $path;
         $this->location = $location;
-        $this->ieConditionalComment = $ieConditionalComment;
     }
 
     public function add(AbstractAsset $asset)
@@ -40,11 +38,6 @@ class Collection implements IteratorAggregate
     public function getIterator()
     {
         return new ArrayIterator($this->assets);
-    }
-
-    public function getIeConditionalComment()
-    {
-        return $this->ieConditionalComment;
     }
 
     public function getPath()

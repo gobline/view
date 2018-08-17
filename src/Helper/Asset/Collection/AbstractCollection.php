@@ -85,9 +85,6 @@ abstract class AbstractCollection extends AbstractViewEventSubscriber
 
     protected function printCollection()
     {
-        if ($this->collection->getIeConditionalComment()) {
-            echo '<!--[if '.$this->collection->getIeConditionalComment()."]>\n";
-        }
         $path = $this->minify ?: $this->collection->getPath();
         $absolutePath = getcwd().'/public/'.$path;
         if (!is_file($absolutePath)) {
@@ -103,9 +100,5 @@ abstract class AbstractCollection extends AbstractViewEventSubscriber
         }
 
         $this->printHtml($this->basePath.'/'.$path);
-
-        if ($this->collection->getIeConditionalComment()) {
-            echo "<![endif]-->\n";
-        }
     }
 }
