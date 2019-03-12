@@ -29,7 +29,6 @@ use Gobline\View\Helper\Asset\Collection\JsCollectionFactory;
 use Gobline\View\Helper\Lang\Lang;
 use Gobline\View\Helper\Meta\Meta;
 use Gobline\View\Helper\Link\Link;
-use Gobline\View\Helper\NoIndex\NoIndex;
 use Gobline\View\Helper\Placeholder\Placeholder;
 use Gobline\View\Helper\Responsive\Responsive;
 use Gobline\View\Helper\Route\Route;
@@ -67,7 +66,6 @@ class DefaultViewHelpersRegistrar
             Lang::class,
             Meta::class,
             Link::class,
-            NoIndex::class,
             Placeholder::class,
             Responsive::class,
             Route::class,
@@ -127,8 +125,6 @@ class DefaultViewHelpersRegistrar
         $this->container->share(Meta::class);
 
         $this->container->share(Link::class);
-
-        $this->container->share(NoIndex::class);
 
         $this->container->share(Placeholder::class);
 
