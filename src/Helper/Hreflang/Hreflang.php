@@ -44,6 +44,10 @@ class Hreflang extends AbstractViewEventSubscriber implements ViewHelperInterfac
 
     public function __invoke($hreflang = true)
     {
+        if ($this->environment->isSubRequest()) {
+            return;
+        }
+
         if ($hreflang) {
             if (count($this->environment->getSupportedLanguages()) < 2) {
                 return;

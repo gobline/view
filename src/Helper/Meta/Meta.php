@@ -14,6 +14,7 @@ namespace Gobline\View\Helper\Meta;
 use Gobline\View\Helper\ViewHelperInterface;
 use Gobline\View\Helper\AbstractViewEventSubscriber;
 use Gobline\View\Helper\ViewEventDispatcher;
+use Gobline\Environment\Environment;
 
 /**
  * @author Mathieu Decaffmeyer <mdecaffmeyer@gmail.com>
@@ -21,11 +22,15 @@ use Gobline\View\Helper\ViewEventDispatcher;
 class Meta extends AbstractViewEventSubscriber implements ViewHelperInterface
 {
     private $eventDispatcher;
+    private $environment;
     private $metas = [];
 
-    public function __construct(ViewEventDispatcher $eventDispatcher)
-    {
+    public function __construct(
+        Environment $environment,
+        ViewEventDispatcher $eventDispatcher
+    ) {
         $this->eventDispatcher = $eventDispatcher;
+        $this->environment = $environment;
     }
 
     public static function getName()
@@ -35,6 +40,10 @@ class Meta extends AbstractViewEventSubscriber implements ViewHelperInterface
 
     public function __invoke(array $attributes)
     {
+        if ($this->environment->isSubRequest()) {
+            return;
+        }
+
         if (!$this->metas) {
             $this->eventDispatcher->addSubscriber($this);
         }

@@ -37,6 +37,10 @@ class Lang extends AbstractViewEventSubscriber implements ViewHelperInterface
 
     public function __invoke($lang = true)
     {
+        if ($this->environment->isSubRequest()) {
+            return;
+        }
+
         if ($lang) {
             $this->eventDispatcher->addSubscriber($this);
         } else {
